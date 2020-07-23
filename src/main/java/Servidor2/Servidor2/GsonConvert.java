@@ -22,9 +22,10 @@ public class GsonConvert {
 
         return usuario;
     }
-    public String convert(Usuario usuario){
+
+    public String convert(Usuario usuario) {
         Gson gson = new Gson();
-        
+
         return gson.toJson(usuario);
     }
 }

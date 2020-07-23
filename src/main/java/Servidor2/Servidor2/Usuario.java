@@ -47,4 +47,8 @@ public class Usuario {
     public void setJwt(Jwt jwt) {
         this.jwt = jwt;
     }
+
+    public Jwt getJwt() {
+        return this.jwt;
+    }
 }

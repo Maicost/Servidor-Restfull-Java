@@ -5,10 +5,7 @@
  */
 package Servidor2.Servidor2;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -19,9 +16,6 @@ import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.MediaType;
-import com.google.gson.Gson;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * REST Web Service
@@ -64,7 +58,7 @@ public class RestfullMetodos {
     //efetua login  
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Boolean postJson(String content) throws SQLException, ClassNotFoundException {
+    public String postJson(String content) throws SQLException, ClassNotFoundException {
 
         GsonConvert gsoncvt = new GsonConvert();
 
@@ -80,8 +74,8 @@ public class RestfullMetodos {
 
             System.out.println("" + gsoncvt.convert(usuario));
 
-            return true;
+            return usuario.getJwt().toString();
         }
-        return false;
+        return "false";
     }
 }

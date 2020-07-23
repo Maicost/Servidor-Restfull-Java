@@ -31,9 +31,9 @@ public class JWT {
 
         try {
             Jws jws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(buildJws);
-            
+
             return jws;
-            
+
         } catch (JwtException e) {
             //Ta falho kkk
         }
