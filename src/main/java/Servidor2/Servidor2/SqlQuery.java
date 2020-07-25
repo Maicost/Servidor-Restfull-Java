@@ -29,10 +29,6 @@ public class SqlQuery {
                 + "'";
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
-
-        System.out.println("nome: " + rs.getString("Nome") + "senha: "
-                + rs.getString("Senha") + "salta: " + rs.getString("Salt"));
-
         return PasswordUtils.verifyUserPassword(senha, rs.getString("Senha"),
                 rs.getString("Salt"));
     }
