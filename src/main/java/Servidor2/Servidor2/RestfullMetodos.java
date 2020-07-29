@@ -5,6 +5,7 @@
  */
 package Servidor2.Servidor2;
 
+import com.google.gson.Gson;
 import java.sql.SQLException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -14,8 +15,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.enterprise.context.RequestScoped;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import org.imixs.jwt.JWTException;
 
 /**
  * REST Web Service
@@ -35,10 +39,18 @@ public class RestfullMetodos {
     public RestfullMetodos() {
     }
 
-    @GET
+    
+    
+    @POST
+    @Path("info")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getJson() throws SQLException {
-        return "Get";
+    public String getJson(String token) throws SQLException, ClassNotFoundException, JWTException {
+        Gson gson = new Gson();
+        Login login = gson.fromJson(token, Login.class);
+        System.out.println("Este é o token: "+login.token+":Final");
+        SqlQuery sqlquerry = new SqlQuery();
+        Usuario usuario = JWTToken.getInstance().ValidateToken(login.token);
+        return sqlquerry.ID(usuario.getNome());
     }
 
     //cadastra usuario
@@ -46,9 +58,9 @@ public class RestfullMetodos {
     @Consumes(MediaType.APPLICATION_JSON)
     public boolean putJson(String content) throws SQLException, ClassNotFoundException {
 
-        GsonConvert gsoncvt = new GsonConvert();
+        Gson gson = new Gson();
 
-        Usuario usuario = gsoncvt.convert(content);
+        Usuario usuario = gson.fromJson(content, Usuario.class);
 
         SqlQuery query = new SqlQuery();
 
@@ -59,23 +71,28 @@ public class RestfullMetodos {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public String postJson(String content) throws SQLException, ClassNotFoundException {
-
-        GsonConvert gsoncvt = new GsonConvert();
-
-        Usuario usuario = gsoncvt.convert(content);
+        Gson gson = new Gson();
+        
+        System.out.println("\tPost\n");
+        
+        Usuario usuario = gson.fromJson(content, Usuario.class);
 
         SqlQuery query = new SqlQuery();
 
+        Login login = new Login();
+
         if (query.VerifyCrendentials(usuario.getNome(), usuario.getSenha())) {
 
-            JWT jwt = new JWT();
+            usuario.setSenha("null");
 
-            usuario.setJwt(jwt.CreateToken(usuario.getNome()));
+            login.token = JWTToken.getInstance().GenerateToken(usuario);
 
-            System.out.println("" + gsoncvt.convert(usuario));
+            login.success = true;
 
-            return usuario.getJwt().toString();
+            usuario.setJwt(gson.toJson(login));
+        } else {
+            login.success = false;
         }
-        return "false";
+        return gson.toJson(login);
     }
 }

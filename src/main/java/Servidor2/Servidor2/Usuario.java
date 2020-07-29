@@ -5,7 +5,6 @@
  */
 package Servidor2.Servidor2;
 
-import io.jsonwebtoken.Jwt;
 
 /**
  *
@@ -15,7 +14,7 @@ public class Usuario {
 
     private String nome;
     private String senha;
-    private Jwt jwt;
+    private String jwt;
     private String salt;
 
     public Usuario(String nome, String senha, String salt) {
@@ -44,11 +43,15 @@ public class Usuario {
         return salt;
     }
 
-    public void setJwt(Jwt jwt) {
+    public void setJwt(String jwt) {
         this.jwt = jwt;
     }
+    
+    public void setSenha(String senha){
+        this.senha = senha;
+    }
 
-    public Jwt getJwt() {
+    public String getJwt() {
         return this.jwt;
     }
 }
