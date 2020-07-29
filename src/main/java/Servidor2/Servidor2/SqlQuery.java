@@ -44,6 +44,13 @@ public class SqlQuery {
             return nome.contentEquals(rs.getString("Nome"));
         }
     }
+    
+    public String ID(String nome) throws SQLException {
+        String sql = "SELECT * FROM Usuarios WHERE Nome LIKE '" + nome + "'";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);  //execute query gera retorno
+        return rs.getString("ID");
+    }
 
     public boolean InsertUser(String nome, String senha, String salt) throws SQLException {
         if (!VerifyUsername(nome)) {
