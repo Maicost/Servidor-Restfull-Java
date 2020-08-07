@@ -1,5 +1,6 @@
-package Model;
+package Utils;
 
+import Model.CredenciaisAcesso;
 import org.imixs.jwt.*;
 
 import javax.crypto.SecretKey;

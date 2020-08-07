@@ -1,4 +1,4 @@
-package Model;
+package Utils;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

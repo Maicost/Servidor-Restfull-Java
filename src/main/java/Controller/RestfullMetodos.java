@@ -6,8 +6,8 @@
 package Controller;
 
 import Model.CredenciaisAcesso;
-import Model.JWTToken;
-import Model.SqlQuery;
+import Utils.JWTToken;
+import Utils.SqlQuery;
 import Model.Login;
 import com.google.gson.Gson;
 import java.sql.SQLException;

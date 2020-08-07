@@ -1,4 +1,4 @@
-package Servidor2.Servidor2.resources;
+package Resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
